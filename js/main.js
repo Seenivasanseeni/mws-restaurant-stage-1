@@ -1,3 +1,12 @@
+//register a service worker
+navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(function(sw){
+  console.log("Worker Registration Sucessful");
+}).catch(function(sw){
+  console.log("Worker Registration Unsucessful");
+  console.log(sw);
+})
+
+
 let restaurants,
   neighborhoods,
   cuisines
