@@ -18,6 +18,9 @@ self.addEventListener('activate',function(event){
 
 self.addEventListener('fetch',function(event){
     console.log("sw: Fetch event for url:",event.request.url);
+    event.respondWith(
+        new Response("Not Found")
+    )
 })
 
 self.addEventListener('install',function(event){
