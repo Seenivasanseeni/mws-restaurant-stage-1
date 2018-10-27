@@ -34,7 +34,8 @@ self.addEventListener('install',function(event){
 self.addEventListener('fetch',function(event){
     console.log("sw: Fetch event for url:",event.request.url);
     event.respondWith(
-            caches.match(event.request).then(reponse=>{
+        caches.open(self.cacheName).then(cache=>{
+            return cache.match(event.request).then(reponse=>{
                 if(reponse){ 
                     console.log("sw: Available in cache");
                     return reponse;
@@ -42,5 +43,6 @@ self.addEventListener('fetch',function(event){
                 console.log("sw: Fetching from network");
                 return fetch(event.request);
             })
+        })
     )
 })
