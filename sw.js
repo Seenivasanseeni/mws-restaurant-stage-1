@@ -1,28 +1,25 @@
-self.addEventListener('fetch',function(event){
-    console.log("Fetch event for url:",event.request.url);
-    caches.open("cache-v1").then(function(cache){
-            //use match function 
-            cache.match(event.request).then(function(response){
-                if(response){
-                    console.log("Response was found in cache.");
-                    return response;
-                }
-                console.log("Fetching Resource from Network");
-                fetch(event.request).then(function(networkResponse){
-                    cache.put(event.request,networkResponse);
-                    return networkResponse;
-                }).catch(function(){
-                    console.log("Error in fetching the resource");
+self.cacheName='cache-v1';
+
+self.addEventListener('activate',function(event){
+    console.log("sw: Activation of wervice worker")
+    event.waitUntill(
+        caches.keys().then(function(keys){
+            return Promise.all(
+                keys.map(key=>{
+                    console.log(key);    
+                    if(key!=self.cacheName){
+                        return caches.delete(key);
+                    }
                 })
-            })
-    }).catch(function(){
-        console.log("Error in handling caches");
-    })
+            )
+        })
+    )
+})
+
+self.addEventListener('fetch',function(event){
+    console.log("sw: Fetch event for url:",event.request.url);
 })
 
 self.addEventListener('install',function(event){
-    console.log("install sw")
-})
-self.addEventListener('activate',function(event){
-    console.log("Activation of sw")
+    console.log("sw: install sw")
 })
