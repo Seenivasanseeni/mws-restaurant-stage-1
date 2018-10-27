@@ -1,8 +1,8 @@
 self.cacheName='cache-v1';
 
 self.addEventListener('activate',function(event){
-    console.log("sw: Activation of wervice worker")
-    event.waitUntill(
+    console.log("sw: Activation of service worker")
+    event.waitUntil(
         caches.keys().then(function(keys){
             return Promise.all(
                 keys.map(key=>{
@@ -21,7 +21,7 @@ self.addEventListener('fetch',function(event){
 
 self.addEventListener('install',function(event){
     console.log("sw: install sw");
-    event.waitUntill(
+    event.waitUntil(
         caches.open(self.cacheName).then(function(cache){
             return cache.addAll([
                 '/index.html',
