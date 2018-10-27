@@ -146,8 +146,13 @@ resetRestaurants = (restaurants) => {
  */
 fillRestaurantsHTML = (restaurants = self.restaurants) => {
   const ul = document.getElementById('restaurants-list');
+  var taborder=4;
   restaurants.forEach(restaurant => {
-    ul.append(createRestaurantHTML(restaurant));
+    var restaurantElement=createRestaurantHTML(restaurant);
+    restaurantElement.tabIndex=taborder;
+    console.log(restaurantElement);
+    taborder++;
+    ul.append(restaurantElement);
   });
   addMarkersToMap();
 }

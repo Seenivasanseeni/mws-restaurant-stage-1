@@ -11,7 +11,7 @@
 <body>
   <header>
     <nav>
-      <h1><a href="/">Restaurant Reviews</a></h1>
+      <h1 tabindex="0"><a href="/">Restaurant Reviews</a></h1>
     </nav>
   </header>
 
@@ -19,16 +19,17 @@
     <section id="map-container">
       <div id="map"></div>
     <section>
-      <div class="filter-options">
-          <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+    <h2> Filter Options </h2>
+      <div class="filter-options" >
+          <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" tabindex="1">
               <option value="all">All Neighborhoods</option>
             </select>
-            <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+            <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" tabindex="2">
               <option value="all">All Cuisines</option>
             </select>
         </div>
     </section>
-        <h2>Filter Results</h2> 
+        <h2 tabindex="3">Filter Results</h2> 
       <ul id="restaurants-list" class="restaurants-container"></ul>
     </section>
   </main>
