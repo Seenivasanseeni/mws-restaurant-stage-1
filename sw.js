@@ -1,4 +1,11 @@
 self.cacheName='cache-v1';
+self.resources= new Set([
+    '/index.html',
+    '/css/styles.css',
+    '/js/dbhelper.js',
+    '/js/main.js',
+    '/js/restaurant_info.js'
+]);
 
 self.addEventListener('activate',function(event){
     console.log("sw: Activation of service worker")
@@ -17,15 +24,10 @@ self.addEventListener('activate',function(event){
 
 self.addEventListener('install',function(event){
     console.log("sw: install sw");
+    console.log("Downloading resources for ",self.resources);
     event.waitUntil(
         caches.open(self.cacheName).then(function(cache){
-            return cache.addAll([
-                '/index.html',
-                '/css/styles.css',
-                '/js/dbhelper.js',
-                '/js/main.js',
-                '/js/restaurant_info.js'
-            ])
+            return cache.addAll(self.resources)
         })
     )
 })
@@ -41,6 +43,8 @@ self.addEventListener('fetch',function(event){
                     return reponse;
                 }
                 console.log("sw: Fetching from network");
+                self.resources.add(event.request.url);
+                console.log("sw: Need to download resources",self.resources);
                 return fetch(event.request);
             })
         })
