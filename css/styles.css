@@ -279,6 +279,10 @@ nav h1 a {
   border: 2px solid dotted;
   justify-content: space-evenly;
 }
+#map{
+  margin-top: 0px;
+  margin-bottom: 20px;
+}
 @media screen and (max-width: 740px){
   #breadcrumb {
     width: 100%;
@@ -298,5 +302,7 @@ nav h1 a {
   #restaurant-container, #reviews-container,{
     width: 90%;
   }
-
+  .filter-options{
+    height: 20%;
+  }
 }
