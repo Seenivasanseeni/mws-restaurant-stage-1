@@ -279,3 +279,24 @@ nav h1 a {
   border: 2px solid dotted;
   justify-content: space-evenly;
 }
+@media screen and (max-width: 740px){
+  #breadcrumb {
+    width: 100%;
+  }
+  .inside #map-container {
+    position: absolute;
+    width: 100%;
+    height: 10%;
+  }
+  #restaurant-container, #reviews-container {
+    width: 100%;
+    justify-content: center;  
+  }
+  #map-container{
+    margin-top: 50px;
+  }
+  #restaurant-container, #reviews-container,{
+    width: 90%;
+  }
+
+}
