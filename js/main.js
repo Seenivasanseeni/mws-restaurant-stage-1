@@ -150,7 +150,6 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     var restaurantElement=createRestaurantHTML(restaurant);
     restaurantElement.tabIndex=taborder;
-    console.log(restaurantElement);
     taborder++;
     ul.append(restaurantElement);
   });
