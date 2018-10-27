@@ -15,10 +15,6 @@ self.addEventListener('activate',function(event){
     )
 })
 
-self.addEventListener('fetch',function(event){
-    console.log("sw: Fetch event for url:",event.request.url);
-})
-
 self.addEventListener('install',function(event){
     console.log("sw: install sw");
     event.waitUntil(
@@ -31,5 +27,20 @@ self.addEventListener('install',function(event){
                 '/js/restaurant_info.js'
             ])
         })
+    )
+})
+
+
+self.addEventListener('fetch',function(event){
+    console.log("sw: Fetch event for url:",event.request.url);
+    event.respondWith(
+            caches.match(event.request).then(reponse=>{
+                if(reponse){ 
+                    console.log("sw: Available in cache");
+                    return reponse;
+                }
+                console.log("sw: Fetching from network");
+                return fetch(event.request);
+            })
     )
 })
