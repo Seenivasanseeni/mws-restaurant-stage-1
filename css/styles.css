@@ -306,3 +306,6 @@ nav h1 a {
     height: 20%;
   }
 }
+label{
+  font-weight: bolder;
+}
