@@ -1,10 +1,12 @@
 self.cacheName='cache-v1';
 self.resources= new Set([
     '/index.html',
+    '/restaurant.html',
     '/css/styles.css',
     '/js/dbhelper.js',
     '/js/main.js',
-    '/js/restaurant_info.js'
+    '/js/restaurant_info.js',
+    '/data/restaurants.json'
 ]);
 
 self.addEventListener('activate',function(event){
@@ -28,6 +30,10 @@ self.addEventListener('install',function(event){
     event.waitUntil(
         caches.open(self.cacheName).then(function(cache){
             return cache.addAll(self.resources)
+        }).then(reponse=>{
+            console.log("All resources are downloaded");
+        }).catch(reponse=>{
+            console.log("Error in downloading resources");
         })
     )
 })
@@ -43,10 +49,15 @@ self.addEventListener('fetch',function(event){
                     return reponse;
                 }
                 console.log("sw: Fetching from network");
-                self.resources.add(event.request.url);
-                console.log("sw: Need to download resources",self.resources);
+                return fetch(event.request).then(networkResponse=>{
+                        map(event.request,networkResponse);
+                        return response;
+                });
+            }).catch(response=>{
                 return fetch(event.request);
             })
+        }).catch(reponse=>{
+            return fetch(event.request);
         })
     )
 })
