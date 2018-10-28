@@ -1,4 +1,4 @@
-self.cacheName='cache-v1';
+self.cacheName='cache-v2';
 
 self.addEventListener('activate',function(event){
     console.log("sw: Activation of service worker")
