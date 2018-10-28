@@ -33,6 +33,9 @@ self.addEventListener('fetch',function(event){
                 return fetch(event.request).then(networkResponse=>{
                         cache.put(event.request,networkResponse.clone());
                         return networkResponse;
+                }).catch(networkResponse=>{
+                    console.log("sw: for url ",event.request.url,"netwrork error popped",networkResponse);
+                    return "Network Error:"+networkResponse;
                 })
             })
         })
