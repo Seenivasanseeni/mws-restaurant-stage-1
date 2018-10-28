@@ -21,20 +21,28 @@ self.addEventListener('install',function(event){
 
 
 self.addEventListener('fetch',function(event){
+    var requestURL=event.request.url;
     console.log("sw: Fetch event for url:",event.request.url);
+    //special case for handling restaurant.html?id=[0-9]
+    var queryMatcher=event.request.url.match("restaurant.html\\?id=[0-9]");
+    if(queryMatcher){
+        requestURL=event.request.url.split('?')[0];
+        console.log("sw: fetch is for restaurant.html so request is modified for ", requestURL);
+    }
+
     event.respondWith(
         caches.open(self.cacheName).then(cache=>{
-            return cache.match(event.request).then(reponse=>{
+            return cache.match(requestURL).then(reponse=>{
                 if(reponse){ 
-                    console.log("sw: Available in cache for ",event.request.url);
+                    console.log("sw: Available in cache for ",requestURL);
                     return reponse;
                 }
-                console.log("sw: Fetching from network for ",event.request.url);
+                console.log("sw: Fetching from network for ",requestURL);
                 return fetch(event.request).then(networkResponse=>{
-                        cache.put(event.request,networkResponse.clone());
+                        cache.put(requestURL,networkResponse.clone());
                         return networkResponse;
                 }).catch(networkResponse=>{
-                    console.log("sw: for url ",event.request.url,"netwrork error popped",networkResponse);
+                    console.log("sw: for url ",requestURL,"netwrork error popped",networkResponse);
                     return "Network Error:"+networkResponse;
                 })
             })
